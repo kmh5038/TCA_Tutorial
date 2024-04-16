@@ -10,13 +10,13 @@ import SwiftUI
 
 @main
 struct TCA_TutorialApp: App {
-    static let store = Store(initialState: AppFeature.State()) {
-        AppFeature()
+    static let store = Store(initialState: CounterFeature.State()) {
+        CounterFeature()
             ._printChanges()
     }
     var body: some Scene {
         WindowGroup {
-            AppView(store: TCA_TutorialApp.store)
+            CounterView(store: TCA_TutorialApp.store)
         }
     }
 }
