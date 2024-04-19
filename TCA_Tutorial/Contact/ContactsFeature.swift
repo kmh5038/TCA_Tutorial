@@ -8,21 +8,27 @@
 import ComposableArchitecture
 import Foundation
 
+struct Contact: Equatable, Identifiable {
+    var id: UUID
+    var name: String
+}
+
 @Reducer
-struct ContactFeature {
+struct ContactsFeature {
     @ObservableState
     struct State: Equatable {
-        
+        var contacts: IdentifiedArrayOf<Contact> = []
     }
     
     enum Action {
-        
+        case addButtonTapped
     }
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-                
+            case .addButtonTapped:
+                return .none
             }
         }
     }

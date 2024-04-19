@@ -8,6 +8,29 @@
 import ComposableArchitecture
 import SwiftUI
 
-//struct ContactView: View {
-//    
-//}
+struct ContactsView: View {
+    let store: StoreOf<ContactsFeature>
+    
+    var body: some View {
+        NavigationStack {
+            List {
+                ForEach(store.contacts) { contact in
+                    Text(contact.name)
+                }
+            }
+        }
+        .navigationTitle("Contacts")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    store.send(.addButtonTapped)
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+        }
+    }
+}
+
+
+
