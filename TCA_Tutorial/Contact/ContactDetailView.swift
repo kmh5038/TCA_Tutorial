@@ -7,3 +7,16 @@
 import ComposableArchitecture
 import SwiftUI
 
+struct ContactDetailView: View {
+    @Bindable var store: StoreOf<ContactDetailFeature>
+    
+    var body: some View {
+        Form {
+            Button("Delete") {
+                store.send(.deleteButtonTapped(id: store.contact.id))
+            }
+        }
+        .navigationTitle(Text(store.contact.name))
+        .alert($store.scope(state: \.alert, action: \.alert))
+    }
+}

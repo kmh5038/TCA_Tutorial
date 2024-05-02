@@ -10,11 +10,16 @@ import SwiftUI
 
 
 struct AddContactView: View {
-   @Binding var store: StoreOf<AddContactFeature>
+   @Bindable var store: StoreOf<AddContactFeature>
     
     var body: some View {
         Form {
             TextField("Name", text: $store.contact.name.sending(\.setName))
+            Button {
+                store.send(.saveButtonTapped)
+            } label: {
+                Text("Save")
+            }
         }
         .toolbar {
             ToolbarItem {

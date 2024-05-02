@@ -16,17 +16,34 @@ struct AddContactFeature {
     
     enum Action {
         case cancelButtonTapped
+        case delegate(Delegate)
         case saveButtonTapped
         case setName(String)
+        
+        enum Delegate {
+            // dismiss를 사용하면 굳이 필요없음
+//            case cancel
+            case saveContact(Contact)
+        }
     }
+    
+    @Dependency(\.dismiss) var dismiss
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .cancelButtonTapped:
+                return .run { _ in await dismiss() }
+                
+            case .delegate(_):
                 return .none
+                
             case .saveButtonTapped:
-                return .none
+                return .run { [contact = state.contact] send in
+                    await send(.delegate(.saveContact(contact)))
+                    await dismiss()
+                }
+                
             case let .setName(name):
                 state.contact.name = name
                 return .none
